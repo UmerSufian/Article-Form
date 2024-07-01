@@ -30,11 +30,10 @@ export default async function handler(req : any, res : any) {
         // Upload new image to Cloudinary
         const { v2: cloudinary } = require('cloudinary');
         cloudinary.config({
-          cloud_name: 'duhyk38cm',
-          api_key: '764349611735957',
-          api_secret: '3yM8vabICHtc13BHCd5z4Mf860E'
+          cloud_name: 'dnwojdsgq',
+          api_key: '937781885681347',
+          api_secret: 'jQhX8F8OBz4oKHDW5y49TG8iqSw'
         });
-
         const cloudinaryResponse = await cloudinary.uploader.upload(imageString, {
           folder: 'your_folder_name', // Optional: Set a folder name in Cloudinary
           resource_type: 'auto' // Automatically detect the image type
