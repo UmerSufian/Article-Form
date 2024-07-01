@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
-import DataTable from './dataTable';
+import DataTable from './DataTable';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -76,13 +76,13 @@ const EditorForm = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl w-full bg-white p-10 shadow-xl rounded-lg"> {/* Increased max-width here */}
         <ToastContainer />
-        <h2 className="text-center text-3xl font-bold text-gray-900 mb-8">
-          Editor Form
+        <h2 className="text-center text-4xl font-semibold text-gray-900 mb-8">
+          Article Form
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 gap-6">
             <div>
-              <label htmlFor="title" className="block text-sm font-bold text-gray-700 mb-1">
+              <label htmlFor="title" className="block text-sm font-semibold text-gray-700 mb-1">
                 Title
               </label>
               <input
@@ -95,7 +95,7 @@ const EditorForm = () => {
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-bold text-gray-700 mb-1">
+              <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-1">
                 Description
               </label>
               <div className="mt-1">
@@ -109,7 +109,7 @@ const EditorForm = () => {
             </div>
 
             <div>
-              <label htmlFor="image" className="block text-sm font-bold text-gray-700 mb-1">
+              <label htmlFor="image" className="block text-sm font-semibold text-gray-700 mb-1">
                 Upload Image
               </label>
               <input
@@ -131,7 +131,7 @@ const EditorForm = () => {
             <button
               type="button"
               onClick={handleGetData}
-              className="py-2 px-6 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              className="py-2 px-6 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
             >
               Get Data
             </button>
@@ -149,3 +149,4 @@ const EditorForm = () => {
 };
 
 export default EditorForm;
+

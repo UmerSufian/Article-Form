@@ -47,7 +47,13 @@ const DataTable = ({ data, setData, setEditingData }: any) => {
                 <td className="py-3 px-4 border-b  border-gray-200">{row.data_id}</td>
                 <td className="py-3 px-4 border-b border-gray-200">{row.title}</td>
                 <td className="py-3 px-4 border-b border-gray-200">{row.description}</td>
-                <td className="py-3 px-4 border-b border-gray-200">{row.imageString}</td>
+                <td className="py-3 px-4 border-b border-gray-200">
+                  {row.imageString ? (
+                    <img src={row.imageString} alt="Image" className="h-20 w-auto object-contain" />
+                  ) : (
+                    'No Image'
+                  )}
+                </td>
                 <td className="py-3 px-4 border-b border-gray-200">{new Date(row.created_date).toLocaleString()}</td>
                 <td className="py-3 px-4 border-b border-gray-200 flex justify-between">
                   <button

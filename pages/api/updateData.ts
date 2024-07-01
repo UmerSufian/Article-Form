@@ -10,20 +10,49 @@ export default async function handler(req : any, res : any) {
     }
 
     try {
+      // Split existing article_data to retrieve previous imageCloudinaryUrl if needed
       const client = await pool.connect();
-      const result = await client.query(
-        'UPDATE articles SET article_data = $1 WHERE data_id = $2 RETURNING *',
-        [`${title},${description},${imageString}`, id]
+      const existingData = await client.query(
+        'SELECT article_data FROM articles WHERE data_id = $1',
+        [id]
       );
-      client.release();
 
-      if (result.rowCount === 0) {
+      if (existingData.rows.length === 0) {
+        client.release();
         return res.status(404).json({ error: 'Data not found' });
       }
 
+      const [prevTitle, prevDescription, prevImageCloudinaryUrl] = existingData.rows[0].article_data.split(',');
+
+      // Determine if the imageString is a base64 data or Cloudinary URL
+      let updatedImageString = imageString;
+      if (imageString.startsWith('data:')) {
+        // Upload new image to Cloudinary
+        const { v2: cloudinary } = require('cloudinary');
+        cloudinary.config({
+          cloud_name: 'duhyk38cm',
+          api_key: '764349611735957',
+          api_secret: '3yM8vabICHtc13BHCd5z4Mf860E'
+        });
+
+        const cloudinaryResponse = await cloudinary.uploader.upload(imageString, {
+          folder: 'your_folder_name', // Optional: Set a folder name in Cloudinary
+          resource_type: 'auto' // Automatically detect the image type
+        });
+        updatedImageString = cloudinaryResponse.secure_url;
+      }
+
+      // Update data in database
+      const result = await client.query(
+        'UPDATE articles SET article_data = $1 WHERE data_id = $2 RETURNING *',
+        [`${title},${description},${updatedImageString}`, id]
+      );
+      client.release();
+
       res.status(200).json({ message: 'Data updated successfully', updatedData: result.rows[0] });
-    } catch (error) {
-      res.status(500).json({ error: 'Database update error', details: (error as Error).message });
+    } catch (error : any) {
+      console.error('Error updating data:', error as Error);
+      res.status(500).json({ error: 'Database update error', details: error.message });
     }
   } else {
     res.status(405).json({ message: 'Method not allowed' });
